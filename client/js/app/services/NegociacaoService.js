@@ -44,6 +44,12 @@ class NegociacaoService {
       this._obterNegociacoesDaSemana(),
       this._obterNegociacoesDaSemanaAnterior(),
       this._obterNegociacoesDaSemanaRetrasada()
-    ])
+    ]).then(periodos => {
+      let negociacoes = periodos
+        .reduce((dados, periodo) => dados.concat(periodo), []);
+      return negociacoes;
+    }).catch(erro => {
+      throw new Error(erro);
+    });
   }
 }
