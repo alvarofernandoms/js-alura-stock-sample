@@ -3,7 +3,7 @@ class NegociacaoService {
     this._http = new HttpService();
   }
 
-  obterNegociacoesDaSemana() {
+  _obterNegociacoesDaSemana() {
     return this._http
       .get('negociacoes/semana')
       .then(negociacoes => {
@@ -15,7 +15,7 @@ class NegociacaoService {
       })
   }
 
-  obterNegociacoesDaSemanaAnterior(cb) {
+  _obterNegociacoesDaSemanaAnterior() {
     return this._http
       .get('negociacoes/anterior')
       .then(negociacoes => {
@@ -27,7 +27,7 @@ class NegociacaoService {
       })
   }
 
-  obterNegociacoesDaSemanaRetrasada(cb) {
+  _obterNegociacoesDaSemanaRetrasada() {
     return this._http
       .get('negociacoes/retrasada')
       .then(negociacoes => {
@@ -37,5 +37,13 @@ class NegociacaoService {
         console.log(erro);
         throw new Error('Não foi possível obter as negociações da semana retrasada');
       })
+  }
+
+  obterNegociacoes() {
+    return Promise.all([
+      this._obterNegociacoesDaSemana(),
+      this._obterNegociacoesDaSemanaAnterior(),
+      this._obterNegociacoesDaSemanaRetrasada()
+    ])
   }
 }
