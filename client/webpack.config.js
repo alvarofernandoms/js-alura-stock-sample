@@ -1,4 +1,11 @@
 const path = require('path');
+const babelMinifyPlugin = require('babel-minify-webpack-plugin');
+
+let plugins = [];
+
+if (process.env.NODE_ENV == 'production') {
+  plugins.push(new babelMinifyPlugin());
+};
 
 module.exports = {
   entry: './app-src/app.js',
@@ -16,5 +23,6 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins
 }
