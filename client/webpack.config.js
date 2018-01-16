@@ -2,6 +2,7 @@ const path = require('path');
 const babelMinifyPlugin = require('babel-minify-webpack-plugin');
 const extractTextPlugin = require('extract-text-webpack-plugin');
 const optmizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const webpack = require('webpack');
 
 let plugins = [];
 
@@ -19,7 +20,12 @@ if (process.env.NODE_ENV == 'production') {
   }));
 }
 
-plugins.push(new extractTextPlugin('styles.css'))
+plugins.push(new extractTextPlugin('styles.css'));
+
+plugins.push(new webpack.ProvidePlugin({
+  $: 'jquery/dist/jquery.js',
+  jQuery: 'jquery/dist/jquery'
+}))
 
 module.exports = {
   entry: './app-src/app.js',
